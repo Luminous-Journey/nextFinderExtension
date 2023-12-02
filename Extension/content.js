@@ -44,5 +44,5 @@ function href() {
 }
 
 if (href() === null){
-  rel
+  rel()
 }
