@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (links.length > 0) {
       var selectedLink = links[0];
       selectedLink.style.border = "2px solid red";
-      alert("Link with rel='Next' selected!");
+      console.log("Link with rel='Next' selected!");
 
       // Add event listener for right arrow key press
       document.addEventListener("keydown", function (event) {
@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }
       });
     } else {
-      alert("No link with rel='Next' found on the page.");
+      console.log("No link with rel='Next' found on the page.");
     }
   }
 });
