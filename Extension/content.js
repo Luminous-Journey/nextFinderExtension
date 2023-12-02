@@ -1,48 +1,100 @@
-console.log("running")
-function arrow(selectedLink) {
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "ArrowRight") {
-        window.location.href = selectedLink.href
-        return true;
-      }
-    });
-  
+console.log("running");
+function farrow(selectedForwardLink) {
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowRight") {
+      window.location.href = selectedForwardLink.href;
+      console.log("farrow")
+    }
+  });
 }
 
-function rel() {
-  console.log("Using rel markers");
-  var links = document.querySelectorAll("a[rel='Next']");
+function barrow(selectedBackwardLink) {
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowLeft") {
+      window.location.href = selectedBackwardLink.href;
+      console.log("barrow")
+    }
+  });
+}
+
+function frel() {
+  console.log("Using frel markers");
+  var links = document.querySelectorAll("a[rel='next']");
 
   if (links.length > 0) {
-    var selectedLink = links[0]
-    console.log("Captured with rel")
-    selectedLink.style.border = "2px solid green";
-    return selectedLink
+    var selectedForwardLink = links[0];
+    console.log("Captured with frel");
+    selectedForwardLink.style.border = "1px solid red";
+    return selectedForwardLink;
   }
 }
 
-function href() {
-  var links = document.querySelectorAll("a")
-  var oldlink
-  var selectedLink = null
+function brel() {
+  console.log("Using brel markers");
+  var links = document.querySelectorAll("a[rel='prev']");
+
   if (links.length > 0) {
-    console.log("Using href markers");
+    var selectedBackwardLink = links[0];
+    console.log("Captured with brel");
+    selectedBackwardLink.style.border = "1px solid green";
+    return selectedBackwardLink;
+  }
+}
+
+function fhref() {
+  var links = document.querySelectorAll("a");
+  var oldlink;
+  var selectedForwardLink = null;
+  if (links.length > 0) {
     for (var i = 0; i < links.length; i++) {
       if (links[i].innerText.toLowerCase() === "next") {
-        selectedLink = links[i];
-        selectedLink.style.border = "2px solid red"
-        if (oldlink != selectedLink) {
-          console.log("Link with href selected!")
+        console.log("found one");
+        selectedForwardLink = links[i];
+        selectedForwardLink.style.border = "1px solid red";
+        if (oldlink != selectedForwardLink) {
+          console.log("Link with href selected!");
         }
-        oldlink = selectedLink;
-        break
+        oldlink = selectedForwardLink;
+        break;
       }
     }
-    arrow(selectedLink)
+    farrow(selectedForwardLink);
   }
-  return selectedLink
+  return selectedForwardLink;
 }
 
-if (href() === null){
-  rel()
+function bhref() {
+  console.log("hi")
+  var links = document.querySelectorAll("a");
+  var oldlink;
+  var selectedBackwardLink = null;
+  console.log("bhref")
+  if (links.length > 0) {
+    console.log("links exist")
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].innerText.toLowerCase() === "prev") {
+        console.log("found one");
+        selectedBackwardLink = links[i];
+        selectedBackwardLink.style.border = "1px solid green";
+        if (oldlink != selectedBackwardLink) {
+          console.log("Link with bhref selected!");
+        }
+        oldlink = selectedBackwardLink;
+        break;
+      }
+    }
+    barrow(selectedBackwardLink);
+  }
+  return selectedBackwardLink;
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  if (!fhref()) {
+    farrow(frel())
+  }
+  console.log("2")
+  if (!bhref()){
+    console.log("b")
+    barrow(brel())
+  }
+});
