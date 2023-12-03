@@ -1,100 +1,80 @@
-console.log("running");
-function farrow(selectedForwardLink) {
+function arrow(selectedLink, dir) {
+  // when a key is pressed
   document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowRight") {
-      window.location.href = selectedForwardLink.href;
-      console.log("farrow")
+    // if that key is an arrow key with the correct direction
+    if (event.key === "Arrow"+dir) {
+      // move to next page
+      window.location.href = selectedLink.href;
     }
   });
 }
 
-function barrow(selectedBackwardLink) {
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowLeft") {
-      window.location.href = selectedBackwardLink.href;
-      console.log("barrow")
-    }
-  });
-}
-
-function frel() {
-  console.log("Using frel markers");
-  var links = document.querySelectorAll("a[rel='next']");
-
-  if (links.length > 0) {
-    var selectedForwardLink = links[0];
-    console.log("Captured with frel");
-    selectedForwardLink.style.border = "1px solid red";
-    return selectedForwardLink;
+function rel(f) {
+  // set for either forward or backward
+  if (f=="f"){
+    text = "next"
+    dir = "Right"
   }
-}
-
-function brel() {
-  console.log("Using brel markers");
-  var links = document.querySelectorAll("a[rel='prev']");
-
-  if (links.length > 0) {
-    var selectedBackwardLink = links[0];
-    console.log("Captured with brel");
-    selectedBackwardLink.style.border = "1px solid green";
-    return selectedBackwardLink;
+  else if (f=="b"){
+    text = "prev"
+    dir = "Left"
   }
+  // get everything that is marked with rel='selected text'
+  var links = document.querySelectorAll("a[rel='"+ text +"']");
+  // select the first one
+  if (links.length > 0) {
+    var selectedLink = links[0];
+    selectedLink.style.border = "2px solid red";
+  }
+  // send to arrow with direction
+  arrow(selectedLink, dir)
 }
 
-function fhref() {
+function href(f) {
   var links = document.querySelectorAll("a");
   var oldlink;
-  var selectedForwardLink = null;
+  var selectedLink = null;
+  var text
+  var dir
+  if (f="f"){
+    text = "next"
+    dir = "Right"
+    // decide which button (forwar or backward(this is forward))
+  }
+  else if (f="b"){
+    text = "prev"
+    dir = "Left"
+    // decide which button (forwar or backward(this is backward))
+  }
+  // get all the links in the page
   if (links.length > 0) {
     for (var i = 0; i < links.length; i++) {
-      if (links[i].innerText.toLowerCase() === "next") {
-        console.log("found one");
-        selectedForwardLink = links[i];
-        selectedForwardLink.style.border = "1px solid red";
-        if (oldlink != selectedForwardLink) {
+      if (links[i].innerText.toLowerCase() === text) {
+        // if one is valid set it to selectedLink and outline it
+        selectedLink = links[i];
+        selectedLink.style.border = "2px solid red";
+        if (oldlink != selectedLink) {
           console.log("Link with href selected!");
         }
-        oldlink = selectedForwardLink;
+        oldlink = selectedLink;
         break;
       }
     }
-    farrow(selectedForwardLink);
+    // send that to the arrow function with a direction decided at the begining
+    arrow(selectedLink, dir);
   }
-  return selectedForwardLink;
-}
-
-function bhref() {
-  console.log("hi")
-  var links = document.querySelectorAll("a");
-  var oldlink;
-  var selectedBackwardLink = null;
-  console.log("bhref")
-  if (links.length > 0) {
-    console.log("links exist")
-    for (var i = 0; i < links.length; i++) {
-      if (links[i].innerText.toLowerCase() === "prev") {
-        console.log("found one");
-        selectedBackwardLink = links[i];
-        selectedBackwardLink.style.border = "1px solid green";
-        if (oldlink != selectedBackwardLink) {
-          console.log("Link with bhref selected!");
-        }
-        oldlink = selectedBackwardLink;
-        break;
-      }
-    }
-    barrow(selectedBackwardLink);
-  }
-  return selectedBackwardLink;
+  // return for logic at bottom
+  return selectedLink;
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  if (!fhref()) {
-    farrow(frel())
+  // wait until page loads
+  if (!href("f")) {
+    // run if there are no valid links 
+    rel("f")
   }
-  console.log("2")
-  if (!bhref()){
-    console.log("b")
-    barrow(brel())
+  if (!href("b")){
+    // run if there are no valid links 
+    rel("b")
   }
 });
