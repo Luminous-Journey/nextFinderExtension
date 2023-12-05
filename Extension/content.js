@@ -30,40 +30,61 @@ function rel(f) {
   arrow(selectedLink, dir)
 }
 
+function findLinkWithText(element, searchText) {
+  if (
+    element.tagName === "A" &&
+    element.innerText.toLowerCase().includes(searchText)
+  ) {
+    return element;
+  }
+
+  for (let i = 0; i < element.children.length; i++) {
+    const childResult = findLinkWithText(element.children[i], searchText);
+    if (childResult) {
+      return childResult;
+    }
+  }
+
+  return null;
+}
+
 function href(f) {
   var links = document.querySelectorAll("a");
   var oldlink;
   var selectedLink = null;
-  var text
-  var dir
-  if (f="f"){
-    text = "next"
-    dir = "Right"
-    // decide which button (forwar or backward(this is forward))
+  var text;
+  var dir;
+
+  if (f === "f") {
+    text = "next"; // Change to "next" for forward navigation
+    dir = "Right";
+  } else if (f === "b") {
+    text = "prev"; // Change to "prev" for backward navigation
+    dir = "Left";
   }
-  else if (f="b"){
-    text = "prev"
-    dir = "Left"
-    // decide which button (forwar or backward(this is backward))
-  }
-  // get all the links in the page
-  if (links.length > 0) {
-    for (var i = 0; i < links.length; i++) {
-      if (links[i].innerText.toLowerCase() === text) {
-        // if one is valid set it to selectedLink and outline it
-        selectedLink = links[i];
-        selectedLink.style.border = "2px solid red";
-        if (oldlink != selectedLink) {
-          console.log("Link with href selected!");
-        }
-        oldlink = selectedLink;
-        break;
+
+  // Traverse each link and its children to find the one with the specified text
+  for (var i = 0; i < links.length; i++) {
+    const foundLink = findLinkWithText(links[i], text);
+    if (foundLink) {
+      selectedLink = foundLink;
+      if (f === "f") {
+        selectedLink.style.border = "1px solid red";
+      } else if (f === "b") {
+        selectedLink.style.border = "1px solid green";
       }
+      if (oldlink !== selectedLink) {
+        console.log("Link with href selected!");
+      }
+      oldlink = selectedLink;
+      break;
     }
-    // send that to the arrow function with a direction decided at the begining
-    arrow(selectedLink, dir);
   }
-  // return for logic at bottom
+
+  // Send the selected link to the arrow function with the specified direction
+  arrow(selectedLink, dir);
+
+  // Return for logic at the bottom
   return selectedLink;
 }
 
