@@ -13,10 +13,11 @@ If the extension file is in a ".zip" format, you'll need to extract its contents
 
 Open your web browser and navigate to the extension management page. The location of this page varies by browser:
 
-Google Chrome or Microsoft Edge: Type chrome://extensions/ or edge://extensions/ in the address bar and press Enter.
-Mozilla Firefox: Type about:addons in the address bar and press Enter.
-Safari: Open Safari, go to the "Safari" menu, and select "Preferences." Then, click on the "Extensions" tab.
-Step 4: Enable Developer Mode (if needed)
+Google Chrome or Microsoft Edge: Type `chrome://extensions/` or `edge://extensions/` in the address bar and press Enter.  
+Mozilla Firefox: Type `about:addons` in the address bar and press Enter.  
+Safari: Open Safari, go to the "Safari" menu, and select "Preferences." Then, click on the "Extensions" tab.  
+
+## Step 4: Enable Developer Mode (if needed)
 
 In most browsers, you need to enable developer mode to install extensions manually. Look for a toggle or checkbox labeled "Developer mode" and make sure it's turned on.
 
