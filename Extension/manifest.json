@@ -3,7 +3,18 @@
   "name": "Link Selector",
   "version": "3.0",
   "description": "Selects a link on the current webpage",
-  "permissions": ["activeTab"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": ["activeTab", "storage"],
+  "browser_action": {
+    "default_icon": {
+      "256": "icon.png"
+    },
+    "default_title": "Link Selector",
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
