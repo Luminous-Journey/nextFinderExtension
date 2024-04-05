@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Link Selector",
-  "version": "3.0",
+  "version": "4.0",
   "description": "Selects a link on the current webpage",
   "background": {
     "scripts": ["background.js"],
