@@ -4,14 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Next Link Navigator</title>
-  <style>
-    body { width: 200px; }
-    button { margin: 10px; }
+  <link rel="stylesheet" href="popup.css">
+    <style>
+    body { width: 200px; height: 30px; }
   </style>
 </head>
 <body>
-  <h2>Next Link Navigator</h2>
-  <button id="toggleButton">Toggle Navigation</button>
+  <div id="popup-container">
+    <div id="toggleButtonContainer">
+      <span id="toggleText">Navigation state:</span>
+      <label class="switch">
+        <input type="checkbox" id="toggleSwitch">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -1,16 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const toggleButton = document.getElementById("toggleButton");
+  const toggleSwitch = document.getElementById("toggleSwitch");
+  const toggleText = document.getElementById("toggleText");
 
   // Get current toggle state when popup is opened
   chrome.runtime.sendMessage({ action: "getToggleState" }, response => {
     const isEnabled = response.isEnabled;
-    toggleButton.textContent = isEnabled ? "Disable Navigation" : "Enable Navigation";
+    toggleSwitch.checked = isEnabled;
+    toggleText.textContent = isEnabled ? "Navigation on" : "Navigation off";
 
     // Toggle state when button is clicked
-    toggleButton.addEventListener("click", () => {
+    toggleSwitch.addEventListener("change", () => {
       chrome.runtime.sendMessage("toggle", response => {
         const isEnabled = response.isEnabled;
-        toggleButton.textContent = isEnabled ? "Disable Navigation" : "Enable Navigation";
+        toggleSwitch.checked = response.isEnabled;
+        toggleText.textContent = (isEnabled ? "Navigation on" : "Navigation off");
       });
     });
   });
